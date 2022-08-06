@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>웹게임</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const LikeButton = () => {
+      const [one, setOne] = React.useState(Math.floor(Math.random() * 10) + 1)
+      const [two, setTwo] = React.useState(Math.floor(Math.random() * 10) + 1)
+      const [inputvalue, setinputvalue] = React.useState('');
+      const [isAnswer, setisAnswer] = React.useState(false);
+
+      const inputHandler = (e) => {
+        setinputvalue(e.target.value)
+      }
+
+      const answerHandler = (e) => {
+        e.preventDefault()
+
+        if (one * two == inputvalue) {
+          setisAnswer(true)
+          setOne(Math.floor(Math.random() * 10) + 1)
+          setTwo(Math.floor(Math.random() * 10) + 1)
+          setinputvalue('')
+        }
+        else {
+          setisAnswer(false)
+          setinputvalue('')
+        }
+      }
+      return (
+        <form onSubmit={answerHandler}>
+          <p>{one} 곱하기 {two}</p>
+          <input type="number" value={inputvalue} onChange={inputHandler} />
+          <button type='submit'>제출</button>
+          <p>정답: {isAnswer ? '맞췄습니다' : '땡'}</p>
+        </form>)
+
+    };
+  </script>
+  <script type="text/babel">
+    ReactDOM.createRoot(document.getElementById('root')).render(<LikeButton />)
+
+  </script>
+</body>
+
+</html>
